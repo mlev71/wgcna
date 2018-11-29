@@ -10,12 +10,6 @@ option_list = list(
     metavar="input"
   ),
 
-  make_option(
-    c("-p", "--plot_name"),
-    type="character",
-    default=NULL,
-    metavar="plot_name"
-  ),
 
    make_option(
       c("--power"),
@@ -29,12 +23,12 @@ option_list = list(
 
 opt <- parse_args(OptionParser(option_list=option_list))
 
-if(is.null(opt$input)|is.null(opt$plot_name)){
- stop("Usage: Rscript wgcna_dendrogram.R -i <input_expression_data> -o <plot_name>") 
+if(is.null(opt$input)){
+ stop("Usage: Rscript wgcna_dendrogram.R -i <input_expression_data> -o <plot_name>")
 }
 
 if(!file.exists(opt$input)){
- stop("Usage: Rscript wgcna_dendrogram.R -i <input_expression_data> -o <plot_name>") 
+ stop("Usage: Rscript wgcna_dendrogram.R -i <input_expression_data> -o <plot_name>")
 }
 
 
@@ -51,12 +45,12 @@ WGCNA::allowWGCNAThreads()
 
 # calculate a soft threshold
 #powers = c(c(1:10), seq(from = 12, to=20, by=2))
-#log_sft = WGCNA::pickSoftThreshold( log_rpkm, 
+#log_sft = WGCNA::pickSoftThreshold( log_rpkm,
 #                                   dataIsExpr = TRUE,
 #                                   RsquaredCut = 0.8,
-#                                   powerVector = powers, 
+#                                   powerVector = powers,
 #                                   #corOptions = list(use='p', method='spearman'),
-#                                   verbose = 5, 
+#                                   verbose = 5,
 #                                   networkType = "signed"
 #                                   )
 
@@ -68,15 +62,15 @@ print("Computing Adjacency Matrix")
 adjacency = WGCNA::adjacency(
   log_rpkm,
   #corOptions = list(use = 'p', method= 'spearman'),
-  type="signed", 
+  type="signed",
   power = opt$power
 )
 
 
 # calculate similarity TOM
 print("Computing TOM")
-TOM <- WGCNA::TOMsimilarity(adjacency, 
-                            TOMType = "signed", 
+TOM <- WGCNA::TOMsimilarity(adjacency,
+                            TOMType = "signed",
                             suppressTOMForZeroAdjacencies=TRUE
 )
 
@@ -103,7 +97,7 @@ assigned_colors = WGCNA::labels2colors(dynamicMods)
 print("Plotting Dendrogram")
 
 png(
-  filename = paste(opt$plot_name, '.png', sep="" )
+  filename = "ouput.png" 
     )
 
 
@@ -111,6 +105,6 @@ WGCNA::plotDendroAndColors(geneTree, assigned_colors,
                            dendroLabels = FALSE, hang = 0.03,
                            addGuide = TRUE, guideHang = 0.05
                            )
- 
+
 
 dev.off()

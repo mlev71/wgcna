@@ -19,13 +19,6 @@ inputs:
     inputBinding:
       position: 1
       prefix: -i
-  plot_name:
-    type: string
-    label: Plot Name
-    doc: Name for the output png of the plot
-    inputBinding:
-      position: 2
-      prefix: -p
   power:
     type: int
     label: Power for Adjacency Matrix Calculation
@@ -37,7 +30,7 @@ outputs:
   plot:
     type: File
     outputBinding:
-      glob: $(inputs.plot_name + '.png')
+      glob: 'output.png'
 
 
 $namespaces:
