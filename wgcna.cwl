@@ -39,7 +39,7 @@ $namespaces:
 
 $schemas:
 - http://edamontology.org/EDAM_1.16.owl
-- http://schema.org/docs/schema_org_rdfa.html
+- https://schema.org/version/latest/schema.rdf
 
 schema_org:author:
   class: schema_org:Person
